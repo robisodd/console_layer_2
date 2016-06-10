@@ -9,7 +9,7 @@ bool emulator = false;
 
 static void error_msg(char *msg) {
   printf("Displaying Error: %s", msg);
-  console_layer_write_text_attributes(console_layer, msg, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorRed, GColorClear, GTextAlignmentCenter, true, true, true);
+  console_layer_write_text_attributes(console_layer, msg, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorRed, GColorClear, GTextAlignmentCenter, true, true);
 }
 
 
@@ -63,13 +63,13 @@ void up_click_handler  (ClickRecognizerRef recognizer, void *context) { //   UP 
 //   }
   if(rand()%2) {
     if(prevchat!=1) {
-      console_layer_write_text_attributes(console_layer, "player 1:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentLeft, true, false, true);
+      console_layer_write_text_attributes(console_layer, "player 1:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentLeft, true, false);
       console_layer_set_text_alignment(console_layer, GTextAlignmentRight);
       prevchat = 1;
     }
   } else {
     if(prevchat!=0) {
-      console_layer_write_text_attributes(console_layer, "player 2:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentRight, true, false, true);
+      console_layer_write_text_attributes(console_layer, "player 2:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentRight, true, false);
       console_layer_set_text_alignment(console_layer, GTextAlignmentLeft);
       prevchat = 0;
     }
@@ -82,19 +82,21 @@ void up_click_handler  (ClickRecognizerRef recognizer, void *context) { //   UP 
 }
 
 void sl_click_handler  (ClickRecognizerRef recognizer, void *context) { // SELECT button
-  if(console_layer) {
-    //layer_remove_from_parent(console_layer);
-    layer_destroy(console_layer);
-    console_layer = NULL;
-    layer_mark_dirty(root_layer);
-  }
-  else {
-    GRect rect = layer_get_frame(root_layer);
-    IF_ROUND(rect = grect_inset(rect, GEdgeInsets(26)));
-    console_layer = console_layer_create(rect);
-    layer_add_child(root_layer, console_layer);
-    layer_mark_dirty(root_layer);
-  }
+  log_buffer(console_layer);
+  
+//   if(console_layer) {
+//     //layer_remove_from_parent(console_layer);
+//     layer_destroy(console_layer);
+//     console_layer = NULL;
+//     layer_mark_dirty(root_layer);
+//   }
+//   else {
+//     GRect rect = layer_get_frame(root_layer);
+//     IF_ROUND(rect = grect_inset(rect, GEdgeInsets(26)));
+//     console_layer = console_layer_create(rect);
+//     layer_add_child(root_layer, console_layer);
+//     layer_mark_dirty(root_layer);
+//   }
 
 //   if(emulator)
 //     error_msg("No Microphone");
@@ -103,37 +105,38 @@ void sl_click_handler  (ClickRecognizerRef recognizer, void *context) { // SELEC
 }
 
 void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN  button
+  console_layer_writeln_text(console_layer, "Submitting My Long Text");
   //console_layer_set_text_colors(console_layer, GColorWhite, GColorRed);
   
-  console_layer_set_background_color(console_layer, (GColor){.argb=0b11000000+(rand()%64)});
+//   console_layer_set_background_color(console_layer, (GColor){.argb=0b11000000+(rand()%64)});
   
-  switch(rand()%2) {
-    case 0: console_layer_set_text_colors(console_layer, (GColor){.argb=0b11000000+(rand()%64)}, (GColor){.argb=0b11000000+(rand()%64)}); break;
-    case 1: console_layer_set_text_background_color(console_layer, GColorInherit); break;
-  }
+//   switch(rand()%2) {
+//     case 0: console_layer_set_text_colors(console_layer, (GColor){.argb=0b11000000+(rand()%64)}, (GColor){.argb=0b11000000+(rand()%64)}); break;
+//     case 1: console_layer_set_text_background_color(console_layer, GColorInherit); break;
+//   }
   
-  switch(rand()%4) {
-    case 0: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_09)); break;
-    case 1: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
-    case 2: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
-    case 3: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
-  }
+//   switch(rand()%4) {
+//     case 0: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_09)); break;
+//     case 1: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//     case 2: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//     case 3: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//   }
 
-  console_layer_set_word_wrap(console_layer, rand()%2 ? (rand()%2?true:false) : WordWrapInherit);  // 50% Inherit, 25% True, 25% False
-  console_layer_set_default_word_wrap(console_layer, rand()%2 ?true : false);
+//   console_layer_set_word_wrap(console_layer, rand()%2 ? (rand()%2?true:false) : WordWrapInherit);  // 50% Inherit, 25% True, 25% False
+//   console_layer_set_default_word_wrap(console_layer, rand()%2 ?true : false);
   
-  switch(rand()%4) {
-    case 0: console_layer_set_text_alignment(console_layer, GTextAlignmentLeft);    break;
-    case 1: console_layer_set_text_alignment(console_layer, GTextAlignmentCenter);  break;
-    case 2: console_layer_set_text_alignment(console_layer, GTextAlignmentRight);   break;
-    case 3: console_layer_set_text_alignment(console_layer, GTextAlignmentInherit); break;
-  }
+//   switch(rand()%4) {
+//     case 0: console_layer_set_text_alignment(console_layer, GTextAlignmentLeft);    break;
+//     case 1: console_layer_set_text_alignment(console_layer, GTextAlignmentCenter);  break;
+//     case 2: console_layer_set_text_alignment(console_layer, GTextAlignmentRight);   break;
+//     case 3: console_layer_set_text_alignment(console_layer, GTextAlignmentInherit); break;
+//   }
   
-  switch(rand()%3) {
-    case 0: console_layer_set_default_text_alignment(console_layer, GTextAlignmentLeft);   break;
-    case 1: console_layer_set_default_text_alignment(console_layer, GTextAlignmentCenter); break;
-    case 2: console_layer_set_default_text_alignment(console_layer, GTextAlignmentRight);  break;
-  }
+//   switch(rand()%3) {
+//     case 0: console_layer_set_default_text_alignment(console_layer, GTextAlignmentLeft);   break;
+//     case 1: console_layer_set_default_text_alignment(console_layer, GTextAlignmentCenter); break;
+//     case 2: console_layer_set_default_text_alignment(console_layer, GTextAlignmentRight);  break;
+//   }
 
   layer_mark_dirty(console_layer);
   //console_layer_write_text(console_layer, "Hello", true);

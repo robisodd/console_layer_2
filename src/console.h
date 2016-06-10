@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
-#define CONSOLE_LAYER_BUFFER_SIZE 500      // # of Bytes to preallocate to hold the text of each console layer
+#define CONSOLE_LAYER_BUFFER_SIZE 128      // # of bytes to preallocate to hold the text of EACH console layer
+#define CONSOLE_LAYER_BUFFER_MASK 127      // # of bytes to preallocate to hold the text of EACH console layer
 
 #define WordWrapFalse   false
 #define WordWrapTrue    true
@@ -12,12 +13,14 @@ enum {GTextAlignmentInherit = 3};
 
 //Maybe inject an image?
 void   console_layer_write_image          (Layer *console_layer, GBitmap *image);
+// Maybe add margin for each row?
 
-//void log_buffer(Layer *console_layer);
+void log_buffer(Layer *console_layer);
 
 // ------------------------------------------------------------------------------------------------------------ //
 // Create and Destroy Layer
 // ------------------------------------------------------------------------------------------------------------ //
+Layer* console_layer_create_with_size(GRect frame, int buffer_size);
 Layer* console_layer_create(GRect frame);
 #define console_layer_destroy(console_layer) layer_destroy(console_layer);
 #define console_layer_safe_destroy(console_layer) if (console_layer) { layer_destroy(console_layer); console_layer = NULL; }
@@ -89,12 +92,12 @@ void console_layer_set_text_colors(Layer *console_layer,
                                    GColor text_background_color);
 
 void console_layer_set_defaults(Layer *console_layer,
-                                GFont font,
+                                GColor layer_background_color,
                                 GColor default_text_color,
                                 GColor default_text_background_color,
-                                GColor layer_background_color,
-                                GTextAlignment text_alignment,
-                                bool word_wrap,
+                                GFont default_font,
+                                GTextAlignment default_text_alignment,
+                                bool default_word_wrap,
                                 bool dirty_layer_after_writing);
 
 void console_layer_set_border(Layer *console_layer,
@@ -110,6 +113,8 @@ void console_layer_set_header(Layer *console_layer,
                               GTextAlignment header_text_alignment);
 // ------------------------------------------------------------------------------------------------------------ //
 // Write Text
+// Note: The source text is copied to the console_layer's buffer inside the function so it can be from a temporary source
+// I haven't tested emoji yet.
 // ------------------------------------------------------------------------------------------------------------ //
 void console_layer_write_text_attributes(Layer *console_layer,
                                          char *text,
@@ -118,10 +123,13 @@ void console_layer_write_text_attributes(Layer *console_layer,
                                          GColor text_background_color,
                                          GTextAlignment text_alignment,
                                          int word_wrap,
-                                         bool advance,
-                                         bool dirty_layer_after_writing);
+                                         bool advance);
 
-void console_layer_write_text(Layer *console_layer, char *text);
-void console_layer_writeln_text(Layer *console_layer, char *text);
-void console_layer_clear(Layer *console_layer);
+void console_layer_write_image_attributes(Layer *console_layer, GBitmap *image, GColor background_color, GTextAlignment image_alignment, bool advance);
+
+void console_layer_write_text   (Layer *console_layer, char *text);
+void console_layer_writeln_text (Layer *console_layer, char *text);
+void console_layer_write_image  (Layer *console_layer, GBitmap *image);
+void console_layer_writeln_image(Layer *console_layer, GBitmap *image);
+void console_layer_clear        (Layer *console_layer);
 // ------------------------------------------------------------------------------------------------------------ //
