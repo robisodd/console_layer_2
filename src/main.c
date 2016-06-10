@@ -6,7 +6,8 @@ Window *main_window;
 Layer *root_layer;
 Layer *console_layer;
 bool emulator = false;
-
+GBitmap *prizebox;
+   
 static void error_msg(char *msg) {
   printf("Displaying Error: %s", msg);
   console_layer_write_text_attributes(console_layer, msg, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorRed, GColorClear, GTextAlignmentCenter, true, true);
@@ -56,29 +57,35 @@ uint8_t prevchat = 3;
 //  Button Functions
 // ------------------------------------------------------------------------ //
 void up_click_handler  (ClickRecognizerRef recognizer, void *context) { //   UP   button
-//   switch(rand()%3) {
+  switch(rand()%3) {
+    case 0: console_layer_set_default_alignment(console_layer, GTextAlignmentLeft); break;
+    case 1: console_layer_set_default_alignment(console_layer, GTextAlignmentCenter); break;
+    case 2: console_layer_set_default_alignment(console_layer, GTextAlignmentRight); break;
+  }
+  layer_mark_dirty(console_layer);
+//  switch(rand()%3) {
 //     case 0: console_layer_writeln_text(console_layer, "Hello\nThere"); break;
 //     case 1: console_layer_writeln_text(console_layer, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"); break;
 //     case 2: console_layer_writeln_text(console_layer, "abcdefghijklmnopqrstuvwxyz"); break;
 //   }
-  if(rand()%2) {
-    if(prevchat!=1) {
-      console_layer_write_text_attributes(console_layer, "player 1:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentLeft, true, false);
-      console_layer_set_text_alignment(console_layer, GTextAlignmentRight);
-      prevchat = 1;
-    }
-  } else {
-    if(prevchat!=0) {
-      console_layer_write_text_attributes(console_layer, "player 2:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentRight, true, false);
-      console_layer_set_text_alignment(console_layer, GTextAlignmentLeft);
-      prevchat = 0;
-    }
-  }
-  switch(rand()%3) {
-    case 0: console_layer_writeln_text(console_layer, "hello\nthere"); break;
-    case 1: console_layer_writeln_text(console_layer, "how\nya\ndoin"); break;
-    case 2: console_layer_writeln_text(console_layer, "sounds good"); break;
-  }
+//   if(rand()%2) {
+//     if(prevchat!=1) {
+//       console_layer_write_text_attributes(console_layer, "player 1:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentLeft, true, false);
+//       console_layer_set_alignment(console_layer, GTextAlignmentRight);
+//       prevchat = 1;
+//     }
+//   } else {
+//     if(prevchat!=0) {
+//       console_layer_write_text_attributes(console_layer, "player 2:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentRight, true, false);
+//       console_layer_set_alignment(console_layer, GTextAlignmentLeft);
+//       prevchat = 0;
+//     }
+//   }
+//   switch(rand()%3) {
+//     case 0: console_layer_writeln_text(console_layer, "hello\nthere"); break;
+//     case 1: console_layer_writeln_text(console_layer, "how\nya\ndoin"); break;
+//     case 2: console_layer_writeln_text(console_layer, "sounds good"); break;
+//   }
 }
 
 void sl_click_handler  (ClickRecognizerRef recognizer, void *context) { // SELECT button
@@ -105,7 +112,13 @@ void sl_click_handler  (ClickRecognizerRef recognizer, void *context) { // SELEC
 }
 
 void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN  button
-  console_layer_writeln_text(console_layer, "Submitting My Long Text");
+  //console_layer_writeln_text(console_layer, "Submitting My Long Text");
+  console_layer_set_alignment(console_layer, GTextAlignmentRight);
+  //console_layer_write_image_attributes(console_layer, prizebox, GColorGreen, GTextAlignmentInherit, true);
+  console_layer_write_image(console_layer, prizebox);
+
+  // THIS DOESN'T WORK
+  
   //console_layer_set_text_colors(console_layer, GColorWhite, GColorRed);
   
 //   console_layer_set_background_color(console_layer, (GColor){.argb=0b11000000+(rand()%64)});
@@ -126,16 +139,16 @@ void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN
 //   console_layer_set_default_word_wrap(console_layer, rand()%2 ?true : false);
   
 //   switch(rand()%4) {
-//     case 0: console_layer_set_text_alignment(console_layer, GTextAlignmentLeft);    break;
-//     case 1: console_layer_set_text_alignment(console_layer, GTextAlignmentCenter);  break;
-//     case 2: console_layer_set_text_alignment(console_layer, GTextAlignmentRight);   break;
-//     case 3: console_layer_set_text_alignment(console_layer, GTextAlignmentInherit); break;
+//     case 0: console_layer_set_alignment(console_layer, GTextAlignmentLeft);    break;
+//     case 1: console_layer_set_alignment(console_layer, GTextAlignmentCenter);  break;
+//     case 2: console_layer_set_alignment(console_layer, GTextAlignmentRight);   break;
+//     case 3: console_layer_set_alignment(console_layer, GTextAlignmentInherit); break;
 //   }
   
 //   switch(rand()%3) {
-//     case 0: console_layer_set_default_text_alignment(console_layer, GTextAlignmentLeft);   break;
-//     case 1: console_layer_set_default_text_alignment(console_layer, GTextAlignmentCenter); break;
-//     case 2: console_layer_set_default_text_alignment(console_layer, GTextAlignmentRight);  break;
+//     case 0: console_layer_set_default_alignment(console_layer, GTextAlignmentLeft);   break;
+//     case 1: console_layer_set_default_alignment(console_layer, GTextAlignmentCenter); break;
+//     case 2: console_layer_set_default_alignment(console_layer, GTextAlignmentRight);  break;
 //   }
 
   layer_mark_dirty(console_layer);
@@ -169,8 +182,10 @@ void main_window_load(Window *window) {
   
   window_set_click_config_provider(window, click_config_provider);
 //   console_layer_write_text_attributes(console_layer, "Welcome to\nConsole Layer", fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GColorInherit, GColorInherit, GTextAlignmentCenter, true, true);
+  console_layer_set_default_alignment(console_layer, GTextAlignmentRight);
   console_layer_writeln_text(console_layer, "Hello World.");
   console_layer_writeln_text(console_layer, "Example Text");
+  //console_layer_set_dirty_automatically(console_layer, false);
 }
 
 void main_window_unload(Window *window) {
@@ -188,6 +203,8 @@ void init() {
   window_stack_push(main_window, true);
   // Create new dictation session
   init_dictation();
+
+  prizebox = gbitmap_create_with_resource(RESOURCE_ID_PRIZEBOX);
 }
 
 void deinit() {
@@ -197,22 +214,22 @@ void deinit() {
 
 
 
-void battery_handler(BatteryChargeState charge_state) {
-  static int previous_state = 0;  // To stop the friggin CONSTANT messages with no state change!
-  if (charge_state.is_charging || charge_state.is_plugged) {
-    if(previous_state != 1) {
-      LOG("External Power Detected: Backlight On");
-      previous_state = 1;
-      light_enable(true);
-    }
-  } else {
-    if(previous_state != 2) {
-      LOG("Battery Power Detected: Backlight Auto");
-      previous_state = 2;
-      light_enable(false);
-    }
-  }
-}
+// void battery_handler(BatteryChargeState charge_state) {
+//   static int previous_state = 0;  // To stop the friggin CONSTANT messages with no state change!
+//   if (charge_state.is_charging || charge_state.is_plugged) {
+//     if(previous_state != 1) {
+//       LOG("External Power Detected: Backlight On");
+//       previous_state = 1;
+//       light_enable(true);
+//     }
+//   } else {
+//     if(previous_state != 2) {
+//       LOG("Battery Power Detected: Backlight Auto");
+//       previous_state = 2;
+//       light_enable(false);
+//     }
+//   }
+// }
 
 
 int main(void) {
@@ -224,11 +241,11 @@ int main(void) {
     LOG("Emulator Detected: Turning Backlight On");
   }
   
-  battery_state_service_subscribe(battery_handler);
-  battery_handler(battery_state_service_peek());
+//   battery_state_service_subscribe(battery_handler);
+//   battery_handler(battery_state_service_peek());
   
   app_event_loop();
   deinit();
   
-  battery_state_service_unsubscribe();
+//   battery_state_service_unsubscribe();
 }
