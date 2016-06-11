@@ -6,11 +6,11 @@ Window *main_window;
 Layer *root_layer;
 Layer *console_layer;
 bool emulator = false;
-GBitmap *prizebox;
+GBitmap *smile;
    
 static void error_msg(char *msg) {
   printf("Displaying Error: %s", msg);
-  console_layer_write_text_attributes(console_layer, msg, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorRed, GColorClear, GTextAlignmentCenter, true, true);
+  console_layer_write_text_styled(console_layer, msg, GColorRed, GColorClear, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GTextAlignmentCenter, true, true);
 }
 
 
@@ -57,12 +57,14 @@ uint8_t prevchat = 3;
 //  Button Functions
 // ------------------------------------------------------------------------ //
 void up_click_handler  (ClickRecognizerRef recognizer, void *context) { //   UP   button
-  switch(rand()%3) {
-    case 0: console_layer_set_default_alignment(console_layer, GTextAlignmentLeft); break;
-    case 1: console_layer_set_default_alignment(console_layer, GTextAlignmentCenter); break;
-    case 2: console_layer_set_default_alignment(console_layer, GTextAlignmentRight); break;
-  }
-  layer_mark_dirty(console_layer);
+//   switch(rand()%3) {
+//     case 0: console_layer_set_layer_alignment(console_layer, GTextAlignmentLeft); break;
+//     case 1: console_layer_set_layer_alignment(console_layer, GTextAlignmentCenter); break;
+//     case 2: console_layer_set_layer_alignment(console_layer, GTextAlignmentRight); break;
+//   }
+//   layer_mark_dirty(console_layer);
+  error_msg("No Microphone");
+  
 //  switch(rand()%3) {
 //     case 0: console_layer_writeln_text(console_layer, "Hello\nThere"); break;
 //     case 1: console_layer_writeln_text(console_layer, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"); break;
@@ -115,7 +117,7 @@ void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN
   //console_layer_writeln_text(console_layer, "Submitting My Long Text");
   console_layer_set_alignment(console_layer, GTextAlignmentRight);
   //console_layer_write_image_attributes(console_layer, prizebox, GColorGreen, GTextAlignmentInherit, true);
-  console_layer_write_image(console_layer, prizebox);
+  console_layer_write_image(console_layer, smile);
 
   // THIS DOESN'T WORK
   
@@ -129,14 +131,14 @@ void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN
 //   }
   
 //   switch(rand()%4) {
-//     case 0: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_09)); break;
-//     case 1: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
-//     case 2: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
-//     case 3: console_layer_set_default_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//     case 0: console_layer_set_layer_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_09)); break;
+//     case 1: console_layer_set_layer_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//     case 2: console_layer_set_layer_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
+//     case 3: console_layer_set_layer_font(console_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18)); break;
 //   }
 
 //   console_layer_set_word_wrap(console_layer, rand()%2 ? (rand()%2?true:false) : WordWrapInherit);  // 50% Inherit, 25% True, 25% False
-//   console_layer_set_default_word_wrap(console_layer, rand()%2 ?true : false);
+//   console_layer_set_layer_word_wrap(console_layer, rand()%2 ?true : false);
   
 //   switch(rand()%4) {
 //     case 0: console_layer_set_alignment(console_layer, GTextAlignmentLeft);    break;
@@ -146,9 +148,9 @@ void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN
 //   }
   
 //   switch(rand()%3) {
-//     case 0: console_layer_set_default_alignment(console_layer, GTextAlignmentLeft);   break;
-//     case 1: console_layer_set_default_alignment(console_layer, GTextAlignmentCenter); break;
-//     case 2: console_layer_set_default_alignment(console_layer, GTextAlignmentRight);  break;
+//     case 0: console_layer_set_layer_alignment(console_layer, GTextAlignmentLeft);   break;
+//     case 1: console_layer_set_layer_alignment(console_layer, GTextAlignmentCenter); break;
+//     case 2: console_layer_set_layer_alignment(console_layer, GTextAlignmentRight);  break;
 //   }
 
   layer_mark_dirty(console_layer);
@@ -175,14 +177,14 @@ void main_window_load(Window *window) {
   console_layer = console_layer_create(rect);
   layer_add_child(root_layer, console_layer);
   
-//   console_layer_set_default_word_wrap(console_layer, true);
-//   console_layer_set_default_text_color(console_layer, GColorWhite);
+//   console_layer_set_layer_word_wrap(console_layer, true);
+//   console_layer_set_layer_text_color(console_layer, GColorWhite);
   //console_layer_set_text_colors(console_layer, GColorWhite, GColorRed);
   console_layer_set_background_color(console_layer, GColorCyan);
   
   window_set_click_config_provider(window, click_config_provider);
 //   console_layer_write_text_attributes(console_layer, "Welcome to\nConsole Layer", fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GColorInherit, GColorInherit, GTextAlignmentCenter, true, true);
-  console_layer_set_default_alignment(console_layer, GTextAlignmentRight);
+  console_layer_set_layer_alignment(console_layer, GTextAlignmentRight);
   console_layer_writeln_text(console_layer, "Hello World.");
   console_layer_writeln_text(console_layer, "Example Text");
   //console_layer_set_dirty_automatically(console_layer, false);
@@ -204,7 +206,7 @@ void init() {
   // Create new dictation session
   init_dictation();
 
-  prizebox = gbitmap_create_with_resource(RESOURCE_ID_PRIZEBOX);
+  smile = gbitmap_create_with_resource(RESOURCE_ID_SMILE);
 }
 
 void deinit() {

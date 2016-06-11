@@ -14,8 +14,8 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/PrizeBox.png",
-                    "name": "PRIZEBOX",
+                    "file": "images/smile.png",
+                    "name": "SMILE",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 }
