@@ -133,6 +133,17 @@ void console_layer_write_text_styled(Layer         *console_layer,
 
 void console_layer_write_image_styled(Layer *console_layer, GBitmap *image, GColor background_color, GTextAlignment alignment, bool advance);
 
+void console_layer_write_text_and_image_styled(Layer         *console_layer,
+                                               GBitmap       *image,
+                                               char          *text,
+                                               GColor         text_color,
+                                               GColor         background_color,
+                                               GFont          font,
+                                               GTextAlignment alignment,
+                                               int            word_wrap,
+                                               bool           advance);
+
+
 void console_layer_write_text   (Layer *console_layer, char *text);
 void console_layer_writeln_text (Layer *console_layer, char *text);
 void console_layer_write_image  (Layer *console_layer, GBitmap *image);

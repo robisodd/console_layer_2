@@ -63,13 +63,13 @@ void up_click_handler  (ClickRecognizerRef recognizer, void *context) { //   UP 
 //     case 2: console_layer_set_layer_alignment(console_layer, GTextAlignmentRight); break;
 //   }
 //   layer_mark_dirty(console_layer);
-  error_msg("No Microphone");
+//   error_msg("No Microphone");
   
-//  switch(rand()%3) {
-//     case 0: console_layer_writeln_text(console_layer, "Hello\nThere"); break;
-//     case 1: console_layer_writeln_text(console_layer, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"); break;
-//     case 2: console_layer_writeln_text(console_layer, "abcdefghijklmnopqrstuvwxyz"); break;
-//   }
+ switch(rand()%3) {
+    case 0: console_layer_write_text(console_layer, "Hello\nThere\n"); break;
+    case 1: console_layer_write_text(console_layer, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n"); break;
+    case 2: console_layer_write_text(console_layer, "abcdefghijklmnopqrstuvwxyz"); break;
+  }
 //   if(rand()%2) {
 //     if(prevchat!=1) {
 //       console_layer_write_text_attributes(console_layer, "player 1:", fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD), GColorBlue, console_layer_get_text_background_color(console_layer), GTextAlignmentLeft, true, false);
@@ -115,9 +115,16 @@ void sl_click_handler  (ClickRecognizerRef recognizer, void *context) { // SELEC
 
 void dn_click_handler  (ClickRecognizerRef recognizer, void *context) { //  DOWN  button
   //console_layer_writeln_text(console_layer, "Submitting My Long Text");
-  console_layer_set_alignment(console_layer, GTextAlignmentRight);
-  //console_layer_write_image_attributes(console_layer, prizebox, GColorGreen, GTextAlignmentInherit, true);
-  console_layer_write_image(console_layer, smile);
+//   console_layer_set_alignment(console_layer, GTextAlignmentRight);
+//   console_layer_writeln_image(console_layer, smile);
+//   console_layer_set_alignment(console_layer, GTextAlignmentRight);
+//   console_layer_write_image_styled(console_layer, smile, GColorGreen, GTextAlignmentInherit, true);
+//   console_layer_writeln_image(console_layer, smile);
+  
+  console_layer_write_image_styled(console_layer, smile, GColorGreen, GTextAlignmentLeft, false);
+  console_layer_write_image_styled(console_layer, smile, GColorGreen, GTextAlignmentRight, true);
+  
+  console_layer_write_text_and_image_styled(console_layer, smile, "smile\nbig", GColorPurple, GColorYellow, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GTextAlignmentCenter, WordWrapFalse, true);
 
   // THIS DOESN'T WORK
   
@@ -183,10 +190,13 @@ void main_window_load(Window *window) {
   console_layer_set_background_color(console_layer, GColorCyan);
   
   window_set_click_config_provider(window, click_config_provider);
-//   console_layer_write_text_attributes(console_layer, "Welcome to\nConsole Layer", fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GColorInherit, GColorInherit, GTextAlignmentCenter, true, true);
+  //console_layer_write_text_styled(console_layer, "Welcome to\nConsole Layer", GColorInherit, GColorInherit, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD), GTextAlignmentCenter, true, true);
+
   console_layer_set_layer_alignment(console_layer, GTextAlignmentRight);
   console_layer_writeln_text(console_layer, "Hello World.");
   console_layer_writeln_text(console_layer, "Example Text");
+  console_layer_write_text(console_layer, "Second\nTry\n");
+  console_layer_write_text(console_layer, "Third Attempt\nOr Whatever\n");
   //console_layer_set_dirty_automatically(console_layer, false);
 }
 
