@@ -12,11 +12,6 @@ enum {GTextAlignmentInherit = 3};
 #define GColorInherit ((GColor8){.argb=GColorClearARGB8})
 #define GFontInherit NULL
 
-// Maybe add margin for each row?
-// Maybe add vertical alignment? (say, writing text on top of image)
-// Maybe function that returns a pointer to the buffer or last string written?  Naa.
-void log_buffer(Layer *console_layer);
-
 // ------------------------------------------------------------------------------------------------------------ //
 // Create and Destroy Layer
 // ------------------------------------------------------------------------------------------------------------ //
@@ -122,32 +117,22 @@ void console_layer_set_header_style(Layer         *console_layer,
 // Images are NOT copied to the buffer (only a pointer) so you gotta keep the image in memory if it's still displayed on screen
 // Also, btw, header text isn't stored in the layer either, just a pointer.
 // ------------------------------------------------------------------------------------------------------------ //
-void console_layer_write_text_styled(Layer         *console_layer,
-                                     char          *text,
-                                     GColor         text_color,
-                                     GColor         background_color,
-                                     GFont          font,
-                                     GTextAlignment alignment,
-                                     int            word_wrap,
-                                     bool           advance);
+void console_layer_write_text_and_image_styled  (Layer *console_layer, GBitmap *image, char *text, GColor text_color, GColor background_color, GFont font, GTextAlignment alignment, bool advance);
+void console_layer_write_text_and_image         (Layer *console_layer, GBitmap *image, char *text);
+void console_layer_writeln_text_and_image       (Layer *console_layer, GBitmap *image, char *text);
 
-void console_layer_write_image_styled(Layer *console_layer, GBitmap *image, GColor background_color, GTextAlignment alignment, bool advance);
+void console_layer_write_image_styled           (Layer *console_layer, GBitmap *image, GColor background_color, GTextAlignment alignment, bool advance);
+void console_layer_write_image                  (Layer *console_layer, GBitmap *image);
+void console_layer_writeln_image                (Layer *console_layer, GBitmap *image);
 
-void console_layer_write_text_and_image_styled(Layer         *console_layer,
-                                               GBitmap       *image,
-                                               char          *text,
-                                               GColor         text_color,
-                                               GColor         background_color,
-                                               GFont          font,
-                                               GTextAlignment alignment,
-                                               int            word_wrap,
-                                               bool           advance);
+void console_layer_write_text_styled            (Layer *console_layer, char *text, GColor text_color, GColor background_color, GFont font, GTextAlignment alignment, int word_wrap, bool advance);
+void console_layer_write_text                   (Layer *console_layer, char *text);
+void console_layer_writeln_text                 (Layer *console_layer, char *text);
 
-
-void console_layer_write_text   (Layer *console_layer, char *text);
-void console_layer_writeln_text (Layer *console_layer, char *text);
-void console_layer_write_image  (Layer *console_layer, GBitmap *image);
-void console_layer_writeln_image(Layer *console_layer, GBitmap *image);
 void console_layer_clear        (Layer *console_layer);
 
+
 // ------------------------------------------------------------------------------------------------------------ //
+
+// Internal use only:
+void log_buffer(Layer *console_layer);
