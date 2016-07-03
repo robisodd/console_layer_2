@@ -1,9 +1,6 @@
 #pragma once
 #include <pebble.h>
 
-#define DirtyAfterWritingFalse   false
-#define DirtyAfterWritingTrue    true
-
 #define WordWrapFalse   false
 #define WordWrapTrue    true
 #define WordWrapInherit 2
@@ -37,9 +34,6 @@ bool           console_layer_get_header_enabled         (Layer *console_layer);
 GFont          console_layer_get_header_font            (Layer *console_layer);
 char*          console_layer_get_header_text            (Layer *console_layer);
 
-bool           console_layer_get_dirty_automatically    (Layer *console_layer);
-GColor         console_layer_get_background_color       (Layer *console_layer);
-
 GColor         console_layer_get_layer_background_color (Layer *console_layer);
 GColor         console_layer_get_layer_text_color       (Layer *console_layer);
 GTextAlignment console_layer_get_layer_alignment        (Layer *console_layer);
@@ -52,6 +46,7 @@ GTextAlignment console_layer_get_alignment              (Layer *console_layer);
 int            console_layer_get_word_wrap              (Layer *console_layer);
 GFont          console_layer_get_font                   (Layer *console_layer);
 
+bool           console_layer_get_dirty_automatically    (Layer *console_layer);
 
 // ------------------------------------------------------------------------------------------------------------ //
 // Sets
@@ -84,9 +79,12 @@ void console_layer_set_dirty_automatically    (Layer *console_layer, bool       
 // ------------------------------------------------------------------------------------------------------------ //
 // Group Sets
 // ------------------------------------------------------------------------------------------------------------ //
-void console_layer_set_colors      (Layer         *console_layer,
-                                    GColor         text_color,
-                                    GColor         background_color);
+void console_layer_set_text_style (Layer         *console_layer,
+                                   GColor         text_color,
+                                   GColor         background_color,
+                                   GFont          font,
+                                   GTextAlignment alignment,
+                                   int            word_wrap);
 
 void console_layer_set_layer_style (Layer         *console_layer,
                                     GColor         layer_text_color,
@@ -117,14 +115,13 @@ void console_layer_set_header_style(Layer         *console_layer,
 // Images are NOT copied to the buffer (only a pointer) so you gotta keep the image in memory if it's still displayed on screen
 // Also, btw, header text isn't stored in the layer either, just a pointer.
 // ------------------------------------------------------------------------------------------------------------ //
-void console_layer_write_text_and_image_styled  (Layer *console_layer, GBitmap *image, char *text, GColor text_color, GColor background_color, GFont font, GTextAlignment alignment, bool advance);
+void console_layer_write_text_and_image_styled  (Layer *console_layer, GBitmap *image, char *text, GColor text_color, GColor background_color, GFont font, GTextAlignment alignment, int word_wrap, bool advance);
 void console_layer_write_text_and_image         (Layer *console_layer, GBitmap *image, char *text);
 void console_layer_writeln_text_and_image       (Layer *console_layer, GBitmap *image, char *text);
 
 void console_layer_write_image_styled           (Layer *console_layer, GBitmap *image, GColor background_color, GTextAlignment alignment, bool advance);
 void console_layer_write_image                  (Layer *console_layer, GBitmap *image);
 void console_layer_writeln_image                (Layer *console_layer, GBitmap *image);
-
 void console_layer_write_text_styled            (Layer *console_layer, char *text, GColor text_color, GColor background_color, GFont font, GTextAlignment alignment, int word_wrap, bool advance);
 void console_layer_write_text                   (Layer *console_layer, char *text);
 void console_layer_writeln_text                 (Layer *console_layer, char *text);
